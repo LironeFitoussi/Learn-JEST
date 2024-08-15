@@ -5,12 +5,13 @@ import { expect, it } from "vitest";
 // import the function to be tested
 import { add } from "./math.js";
 
+// First test case
 it("should summarize all number values in an array", () => {
   // The test case function contains the test logic
 
   // 1. Arrange - set up the test data
   const numbers = [1, 2, 3, 4, 5];
-  const experted = numbers.reduce((acc, curr) => acc + curr, 0);
+  const expected = numbers.reduce((acc, curr) => acc + curr, 0);
 
   // 2. Act - execute the function to be tested
   const result = add(numbers);
@@ -19,9 +20,57 @@ it("should summarize all number values in an array", () => {
   // In this case, the expected value is 15 from the sum of the numbers in the array [1, 2, 3, 4, 5] (1 + 2 + 3 + 4 + 5 = 15)
 
   // 3. Assert - check if the result is equal to the expected value
-  expect(result).toBe(experted);
+  expect(result).toBe(expected);
 });
 
+// Second test case
+it("sould yield NaN if at least one of the values is not a number", () => {
+  // 1. Arrange
+  const numbers = [1, 2, 3, "invalid", 5];
+
+  // 2. Act
+  const result = add(numbers);
+
+  // 3. Assert
+  expect(result).toBeNaN();
+});
+
+// Third test case
+it("should yield a correct sum if an array of numeric strings is passed", () => {
+  // 1. Arrange
+  const numbers = ["1", "2", "3", "6"];
+  const expected = numbers.reduce((acc, curr) => acc + Number(curr), 0);
+
+  // 2. Act
+  const result = add(numbers);
+  // 3. Assert
+  //   expect(result).toBeTypeOf("number");
+  expect(result).toBe(expected);
+});
+
+// Fourth test case
+it("should yield 0 if an empty array is passed", () => {
+  // 1. Arrange
+  const numbers = [];
+  const expected = numbers.reduce((acc, curr) => acc + Number(curr), 0);
+
+  // 2. Act
+  const result = add(numbers);
+
+  // 3. Assert
+  expect(result).toBe(expected);
+});
+
+// Fifth test case
+it("should yield 0 if no arguments are passed", () => {
+  // 1. Arrange
+  const expectedType = "error";
+  // 2. Act
+  const result = add();
+
+  // 3. Assert
+  expect(result).toBeTypeOf(expectedType);
+});
 //! NOTES:
 /**
  *
