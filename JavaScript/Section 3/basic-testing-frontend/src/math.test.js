@@ -1,0 +1,34 @@
+// import the "it" function from the vitest library
+import { expect, it } from "vitest";
+// "it" and "test" are the same function in vitest library that is used to define a test case
+
+// import the function to be tested
+import { add } from "./math.js";
+
+it("should summarize all number values in an array", () => {
+  // The test case function contains the test logic
+
+  // 1. Arrange - set up the test data
+  const numbers = [1, 2, 3, 4, 5];
+  const experted = numbers.reduce((acc, curr) => acc + curr, 0);
+
+  // 2. Act - execute the function to be tested
+  const result = add(numbers);
+
+  // "expect" is a function that is used to make assertions "toBe" is a matcher function that checks if the result is equal to the expected value
+  // In this case, the expected value is 15 from the sum of the numbers in the array [1, 2, 3, 4, 5] (1 + 2 + 3 + 4 + 5 = 15)
+
+  // 3. Assert - check if the result is equal to the expected value
+  expect(result).toBe(experted);
+});
+
+//! NOTES:
+/**
+ *
+ * This is the test case description
+ * The first argument is the description of the test case
+ * The second argument is the test case function
+ */
+
+// Runing the test with "watch" mode: npx vitest --watch
+// like while running a react app with "npm start" or "yarn start" in watch mode to see the changes in the code
