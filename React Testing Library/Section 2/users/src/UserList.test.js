@@ -23,7 +23,11 @@ describe("UserList Component", () => {
     it("shows one row for each user", () => {
         // Act
         render(<UserList users={users} />);
+        
+        // Find all the rows in the table
+        // screen.logTestingPlaygroundURL();
         const rows = screen.getAllByRole("row");
+
 
         // Assert
         expect(rows).toHaveLength(users.length + 1);
