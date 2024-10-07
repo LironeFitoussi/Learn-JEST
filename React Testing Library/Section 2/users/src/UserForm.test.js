@@ -41,12 +41,39 @@ test("it calls onUserAdd when the form is submitted", async () => {
   // Simulate clicking the button
   await user.click(button);
 
-  // Make sure inputs values are now 'jane' and 'jane@jane.com'
-
-  expect(nameInput).toHaveValue("jane");
-  expect(emailInput).toHaveValue("jane@jane.com");
-
   // Assertion to make sure 'onUserAdd' gets called with email/name
   expect(mock).toHaveBeenCalled();
   expect(mock).toHaveBeenCalledWith({ name: "jane", email: "jane@jane.com" });
 });
+
+test("it clears the inputs after the form is submitted", async () => {
+  // Set up a mock function
+  const mock = jest.fn();
+
+  // Try to render my component
+  render(<UserForm onUserAdd={mock} />);
+  
+  // Find the two inputs
+  const nameInput = screen.getByRole("textbox", { name: /name/i });
+  const emailInput = screen.getByRole("textbox", { name: /email/i });
+  
+  // Find the button
+  const button = screen.getByRole("button");
+
+  // Simulate typing in a name
+  await user.click(nameInput);
+  await user.keyboard("jane");
+
+  // Simulate typing in an email
+  await user.click(emailInput); // Simulate clicking the input
+  await user.keyboard("jane@jane.com"); // This is not a real email
+
+  // Simulate clicking the button
+  await user.click(button);
+
+  // Make sure inputs values are now 'jane' and 'jane@jane.com'
+
+  expect(nameInput).toHaveValue("");
+  expect(emailInput).toHaveValue("");
+});
+
