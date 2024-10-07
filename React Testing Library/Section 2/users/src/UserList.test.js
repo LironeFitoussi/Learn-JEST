@@ -1,17 +1,28 @@
 import { screen, render, within } from "@testing-library/react";
-import user from "@testing-library/user-event";
-
 import UserList from "./UserList";
 
-describe("UserList Component", () => {
+function renderComponent() {
     const users = [
         { name: "Jane", email: "jane@dummy.com" },
         { name: "John", email: "john@dummy.com" },
     ];
+    render(<UserList users={users} />);
 
+    return {
+        users
+    };
+}
+
+// NOT RECOMMENDED
+// beforeEach(() => {
+//     renderComponent();
+// });
+
+describe("UserList Component", () => {
+    // screen.logTestingPlaygroundURL()
     it("shows a table with the correct headers", () => {
         // Act
-        render(<UserList users={users} />);
+        renderComponent();
         const nameHeader = screen.getByText("Name");
         const emailHeader = screen.getByText("Email");
 
@@ -22,8 +33,8 @@ describe("UserList Component", () => {
 
     it("shows one row for each user", () => {
         // Act
-        render(<UserList users={users} />);
-        
+        const { users } = renderComponent();
+
         // Find all the rows in the table
         const rows = within(screen.getByTestId("user")).getAllByRole("row");
 
@@ -32,11 +43,10 @@ describe("UserList Component", () => {
     });
 
     it("shows the correct user data in each row", () => {
-        // Act
-        render(<UserList users={users} />);
+        const { users } = renderComponent();
         
         // Find all the rows in the table
-        const rows = within(screen.getByTestId("user")).getAllByRole("row");
+        // const rows = within(screen.getByTestId("user")).getAllByRole("row");
 
         // Assert
         for ( let user of users ) {
