@@ -22,15 +22,15 @@ test("it calls onUserAdd when the form is submitted", async () => {
   render(<UserForm />);
 
   // Find the two inputs
-  const [nameInput, emailInput] = screen.getAllByRole("textbox");
+  const [nameInput, emailInput] = screen.getAllByRole("textbox"); // Destructuring the array of inputs
 
   // Simulate typing in a name
   await user.click(nameInput);
   await user.keyboard("jane");
 
   // Simulate typing in an email
-  await user.click(emailInput);
-  await user.keyboard("jane@jane.com");
+  await user.click(emailInput); // Simulate clicking the input
+  await user.keyboard("jane@jane.com"); // This is not a real email
 
   // Find the button
 
