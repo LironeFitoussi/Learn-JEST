@@ -22,16 +22,29 @@ describe("UserList Component", () => {
 
     it("shows one row for each user", () => {
         // Act
-        const { container } = render(<UserList users={users} />);
+        render(<UserList users={users} />);
         
         // Find all the rows in the table
-        // screen.logTestingPlaygroundURL();
-        // const table = container.querySelector("table");
         const rows = within(screen.getByTestId("user")).getAllByRole("row");
-        // const rows = container.querySelectorAll("tbody tr");
-
 
         // Assert
         expect(rows).toHaveLength(users.length);
+    });
+
+    it("shows the correct user data in each row", () => {
+        // Act
+        render(<UserList users={users} />);
+        
+        // Find all the rows in the table
+        const rows = within(screen.getByTestId("user")).getAllByRole("row");
+
+        // Assert
+        for ( let user of users ) {
+            const name = screen.getByRole("cell", { name: user.name });
+            const email = screen.getByRole("cell", { name: user.email });
+
+            expect(name).toBeInTheDocument();
+            expect(email).toBeInTheDocument();
+        }
     });
 });
