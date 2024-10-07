@@ -8,6 +8,10 @@ function UserForm({ onUserAdd }) {
     event.preventDefault();
 
     onUserAdd({ name, email });
+
+    // Clear the inputs
+    setEmail('');
+    setName('');
   };
 
   return (
