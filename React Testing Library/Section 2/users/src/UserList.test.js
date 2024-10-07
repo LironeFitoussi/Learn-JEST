@@ -1,4 +1,4 @@
-import { screen, render } from "@testing-library/react";
+import { screen, render, within } from "@testing-library/react";
 import user from "@testing-library/user-event";
 
 import UserList from "./UserList";
@@ -26,10 +26,10 @@ describe("UserList Component", () => {
         
         // Find all the rows in the table
         // screen.logTestingPlaygroundURL();
-        const rows = screen.getAllByRole("row");
+        const rows = within(screen.getByTestId("user")).getAllByRole("row");
 
 
         // Assert
-        expect(rows).toHaveLength(users.length + 1);
+        expect(rows).toHaveLength(users.length);
     });
 });
