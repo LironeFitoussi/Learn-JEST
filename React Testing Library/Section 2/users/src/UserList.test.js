@@ -22,11 +22,13 @@ describe("UserList Component", () => {
 
     it("shows one row for each user", () => {
         // Act
-        render(<UserList users={users} />);
+        const { container } = render(<UserList users={users} />);
         
         // Find all the rows in the table
         // screen.logTestingPlaygroundURL();
+        // const table = container.querySelector("table");
         const rows = within(screen.getByTestId("user")).getAllByRole("row");
+        // const rows = container.querySelectorAll("tbody tr");
 
 
         // Assert
