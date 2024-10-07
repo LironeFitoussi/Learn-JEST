@@ -4,7 +4,7 @@ import UserForm from "./UserForm";
 
 test("it shows two inputs and a button", () => {
   // render the component
-  render(<UserForm />);
+  render(<UserForm/>);
 
   // Manipulate the component or find an element in it
   const inputs = screen.getAllByRole("textbox");
@@ -18,9 +18,16 @@ test("it shows two inputs and a button", () => {
 
 test("it calls onUserAdd when the form is submitted", async () => {
   // NOT THE BEST IMPLEMENTATION
-  // Try to render my component
-  render(<UserForm />);
 
+  // Create a mock function
+  const argList = [];
+  const callback = (...args) => {
+    argList.push(args);
+  };
+
+  // Try to render my component
+  render(<UserForm onUserAdd={callback} />);
+  
   // Find the two inputs
   const [nameInput, emailInput] = screen.getAllByRole("textbox"); // Destructuring the array of inputs
 
@@ -33,8 +40,17 @@ test("it calls onUserAdd when the form is submitted", async () => {
   await user.keyboard("jane@jane.com"); // This is not a real email
 
   // Find the button
+  const button = screen.getByRole("button");
 
   // Simulate clicking the button
+  await user.click(button);
+
+  // Make sure inputs values are now 'jane' and 'jane@jane.com'
+
+  expect(nameInput).toHaveValue("jane");
+  expect(emailInput).toHaveValue("jane@jane.com");
 
   // Assertion to make sure 'onUserAdd' gets called with email/name
+  expect(argList).toHaveLength(1);
+  expect(argList[0][0]).toEqual({ name: "jane", email: "jane@jane.com" });
 });
